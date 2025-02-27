@@ -1,0 +1,253 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  username  String    @unique
+  name      String
+  email     String   @unique
+  phone     String    @unique
+  password  String 
+  address   String?
+  createdAt DateTime  @default(now())
+  role      Role  
+  registration Registration[]
+  admission    Admission[]
+  course       Course[]
+  result       Result[]
+  img          String?
+  Gender       Gender?
+  classId      String?     @db.ObjectId
+  class        Class?       @relation(fields: [classId], references: [id])
+  birthday     DateTime    
+  qualification Qualification[]
+  CV           String?
+}
+model Qualification {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String?       
+  user      User?      @relation(fields: [userId], references: [id])
+  qualificationName String
+  startDate         DateTime
+  endDate           DateTime
+  university        String
+  totalMarks        String
+  obtainMarks       String
+  totalCGPA         String
+  obtainCGPA        String
+  img               String?
+}
+model Category {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String
+  categoryType CategoryType 
+  subject      Subject[]
+  class        Class[]
+  course       Course[]
+  job          Job[]
+}
+
+model Student {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  username    String       @unique
+  name        String
+  surname     String
+  email       String      @unique
+  phone       String      @unique
+  address     String
+  img         String?
+}
+
+model Teacher {
+ id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  username  String    @unique
+  name      String
+  surname   String
+  email     String?   @unique
+  phone     String?   @unique
+  address   String
+  img       String?
+  Gender    Gender
+  createdAt      DateTime  @default(now())
+  qualification  String
+  specialization String
+  birthday       DateTime
+}
+
+model Course {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String  @unique
+  capacity     String
+  description  String
+  startDate    DateTime
+  endDate      DateTime
+  requirement   String
+  whoTakes      String
+  mainPoints    String
+  videoURL      String?
+  imageURL      String?
+  supervisorId  String?
+  supervisor    User?       @relation(fields: [supervisorId], references: [id])
+  categoryId    String?
+  category      Category?      @relation(fields:[categoryId], references: [id])
+  admission     Admission[]
+}
+
+model Class {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String     @unique
+  capacity      String? 
+  categoryId    String?
+  category      Category?      @relation(fields:[categoryId], references: [id])
+  lessons       Lesson[]
+  events        Event[]
+  announcements Announcement[]
+  user          User[]
+}
+
+model Job {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String       @unique
+  description    String 
+  specialization String 
+  requirement    String
+  mainPoints     String
+  qualification  String
+  categoryId     String?
+  openingDate    DateTime
+  endDate        DateTime
+  category       Category?      @relation(fields:[categoryId], references: [id])
+  registration   Registration[]
+}
+
+model Registration {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  user            User        @relation(fields:[userId], references: [id])
+  jobId           String
+  job             Job          @relation(fields:[jobId], references: [id])
+  AppliedDate     DateTime       @default(now())
+  ApplicationStatus     Status   
+}
+model Admission {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String?  
+  user            User?          @relation(fields:[userId], references: [id]) 
+  AdmissionDate   DateTime 
+  courseId        String?       
+  course          Course?        @relation(fields:[courseId], references: [id])
+  ApplicationStatus       Status
+}
+
+model Subject {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String           @unique
+  description    String 
+  specialization String 
+  categoryId     String?
+  category       Category?        @relation(fields:[categoryId], references: [id])
+}
+
+model Lesson {
+  id            String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  startTime     DateTime
+  endTime       DateTime
+  classId       String?
+  class         Class?                 @relation(fields: [classId], references: [id])
+  exams         Exam[]
+  assignments   Assignment[]
+  videoURL      String   
+}
+
+model Exam {
+  id        String                @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  startTime DateTime
+  endTime   DateTime
+
+  lessonId String?
+  lesson   Lesson?                @relation(fields: [lessonId], references: [id])
+  results  Result[]
+}
+
+model Assignment {
+  id        String                @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  startDate DateTime
+  dueDate   DateTime
+  lessonId  String?
+  lesson    Lesson?                @relation(fields: [lessonId], references: [id])
+  results   Result[]
+}
+
+model Result {
+ id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  score        String?
+
+  examId       String?
+  exam         Exam?              @relation(fields: [examId], references: [id])
+  assignmentId String?
+  assignment   Assignment?        @relation(fields: [assignmentId], references: [id])
+  studentId    String?
+  student      User?            @relation(fields: [studentId], references: [id])
+}
+
+model Event {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  startTime   DateTime
+  endTime     DateTime
+
+  classId     String?
+  class       Class?  @relation(fields: [classId], references: [id])
+}
+
+model Announcement {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  date        DateTime
+  classId     String?
+  class       Class?   @relation(fields: [classId], references: [id])
+}
+enum Role {
+  USER
+  ADMIN 
+  STUDENT 
+  TEACHER
+  STAFF 
+  }
+enum Gender {
+  MALE
+  FEMALE
+}
+enum CategoryType {
+  ECOMERSE
+  TUTORIAL
+  JOB
+}
+enum Status {
+  APPLIED
+  REVIEW
+  REJECTED
+  COMPLETED
+  SUCCESSFULL
+}
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATUREDAY
+  SUNDAY
+}
