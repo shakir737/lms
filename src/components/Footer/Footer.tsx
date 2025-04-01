@@ -54,15 +54,19 @@ const products: ProductType[] = [
 const Footer = async () => {
     return (
 
-        <div className="mx-auto max-w-2xl sm:pt-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="my-12 grid grid-cols-1 gap-y-10 sm:grid-cols-6 lg:grid-cols-12">
+        <div className="w-full bg-lightkblue mt-5 ">
+            <hr />
+            <div className="flex justify-between px-7 mt-5">
 
                 {/* COLUMN-1 */}
 
-                <div className='sm:col-span-6 lg:col-span-5'>
-                    <div className="flex flex-shrink-0 items-center border-right">
-                        <Image src="/assets/logo/logo.svg" alt="logo" width={214} height={66} />
+                <div className='sm:col-span-6 lg:col-span-5 mt-5'>
+                  <div className="flex justify-between ">
+                   <Image  src={'/assets/logo/logo.png'} alt="logo" height={45} width={40}/>
+                     <div className='font-bold flex justify-center sm:text-small md:text-medium lg:text-xl items-center text-[#1c03fc]'>
+                       <p>E Learning Plateform</p>
                     </div>
+                 </div>   
                     <h3 className='text-xs font-medium text-gunmetalgray lh-160 mt-5 mb-4 lg:mb-16'> Open an account in minutes, get full financial <br /> control for much longer.</h3>
                     <div className='flex gap-4'>
 
@@ -97,8 +101,8 @@ const Footer = async () => {
 
             {/* All Rights Reserved */}
 
-            <div className='py-10 md:flex items-center justify-between border-t border-t-gray-blue'>
-                <h4 className='text-dark-red opacity-75 text-sm text-center md:text-start font-normal'>@2023.E-learnings.All rights reserved</h4>
+            <div className='py-10 md:flex items-center justify-center gap-3 border-t border-t-gray-blue'>
+                <h4 className='flex justify-center text-sm font-normal'>@2025.E-learnings PlateForm Have All Rights Reserved</h4>
                 <div className="flex gap-5 mt-5 md:mt-0 justify-center md:justify-start">
                     <h4 className='text-dark-red opacity-75 text-sm font-normal'><Link href="/" target="_blank">Privacy policy</Link></h4>
                     <div className="h-5 bg-dark-red opacity-25 w-0.5"></div>

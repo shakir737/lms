@@ -77,7 +77,7 @@ export const PriceFilter = () => {
   }
 
   return (
-    <div className="block border-b border-gray-300 pb-7 mb-7">
+    <div className="block border-b border-gray-300 pb-1 mb-1">
       <h3 className="text-heading text-sm md:text-base font-semibold mb-7">
         Price
       </h3>

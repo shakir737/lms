@@ -5,8 +5,10 @@ import DialogComponent from '../Dialog';
 import FormContainer from '../FormContainer';
 
 // CAROUSEL SETTINGS
-export default async function Job ({data, count, user} : {data?:any, count?:number, user:any})  {
+export default function Job ({data, count, user} : {data?:any, count?:number, user:any})  {
+
  const jobId = data[0].id;
+
 
         return (
             <div className="">
@@ -44,7 +46,7 @@ export default async function Job ({data, count, user} : {data?:any, count?:numb
                                                 </div>
                                             </div>
                                             <div>
-                                                <h3 className="text-3xl font-medium">$ 45 - 55/ Per Hour</h3>
+                                                <h3 className="text-medium font-medium">Negotiable</h3>
                                             </div>
                                         </div>
 

@@ -23,13 +23,14 @@ const config: Config = {
 		ultramarine: '#1A21BC',
 		slategray: '#57595F',
 		lightkblue: '#F6FAFF',
-		grey500: '#ECECEC',
-		red: '#B40000',
-		gold: '#FFB900',
+		platinumgray: '#E5E4E2',
 		darkgray: 'rgba(54, 54, 54, 0.75)',
 		darkbrown: '#352E2E',
 		lightgray: '#A3A7AD',
 		gunmetalgray: '#363636',
+		red: '#B40000',
+		gold: '#FFB900',
+	
 		'gray-blue': 'rgba(105, 120, 131, 0.16)',
 		'dark-red': 'rgba(44, 9, 11, 0.8)'
 	},

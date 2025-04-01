@@ -7,6 +7,8 @@ import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from '@heroicons/react/24/solid';
+import SetParams from "@/components/SetParams";
+import Pagination from "@/components/Pagination";
 
 export default async function  Courses({
   searchParams,
@@ -72,62 +74,91 @@ const [courseData, courseCount] = await prisma.$transaction([
   return (
     <div>
       <section className="  h-12 py-10  bg-lightkblue dark:bg-gray-900 flex justify-center items-center ">
-         {categoryCount > 0 ? (<>
-                      <CategoryFilter data={categoryData} type="TUTORIAL"/>
-                    
-                    </>) : (
-                      <p>
-                      Pending</p>
-                    )}
+      <Breadcrumb />
          
-      </section>           
-            <section className="container ">
+      </section>     
+      <div>
+      <div className="flex flex-row w-[100%] gap-5">
+      <div className="bg-lightkblue  hidden lg:block w-[20%] pt-1 px-1   h-full border-r">
+           {
+            categoryCount > 0 && (
+              <ProductsFilters data={categoryData}  />
+            )
+           }
+            
+      </div>
+      <div className="w-[80%] px-5">
+      <section className="w-full mt-5">
             {courseData.map((items, i) => (
-                            <div key={i} className="md:basis-1/4  lg:basis-1/3">
-                            <div className="card flex justify-between w-[1/4]" >
+                            <div key={i} className="px-3 md:px-5 py-3 ">
+                                <Link  href={`/Courses/${items.id}`}>
+                                <div className="" >
                                 <div className='bg-white '>
-                                    <div className="px-3">
-                                        <h4 className='text-2xl font-bold pt-6 text-black'>{items.name}</h4>
-                                        <h4 className='text-2xl font-bold pt-1 text-black'>{items.description}</h4>
-
-                                        <div>
-                                            <h3 className='text-base font-normal pt-6 opacity-75'>{items.requirement}</h3>
+                                    <div className="w-full gap-7">
+                                      <div className="flex flex-col w-full sm:pl-5 sm:ml-5 sm:mr-5 sm:pr-5 md:pl-10 md:ml-10 md:pr-10 md:mr-10">
+                                       
+                                           <div className='text-xl font-normal flex flex-col gap-2 md:gap-5  text-slategray'>
+                                            <div className="flex flex-col md:flex-row gap-10">
+                                             <div className="flex justify-between gap-5 ">
+                                              <p>
+                                              Course:
+                                              </p>
+                                            <h4 className='lg:text-xl md:text-xl sm:text-lg font-bold text-gray-100'>
+                                             {items.name} Course</h4>
+                                             </div>
+                                             <div className="">
+                                             <h3 className="text-red text-2xl flex justify-between font-medium md:ml-10 md:pl-10 gap-5"><p>Last Date:</p>{new Intl.DateTimeFormat("en-US").format(items.endDate)}</h3>
+                                             </div>
+                                             <div className='text-xl font-normal text-slategray flex justify-between gap-10 md:pl-7 md:ml-7'>
+                                            <p>Seats: </p>   <h4 className=' md:text-xl sm:text-lg font-bold text-gray-600'>{60}/250</h4></div>
+                                            </div>
+                                             
+                                           </div>
+                                           <div className='text-xl font-normal flex flex-col md:flex-row gap-5  text-slategray'>
+                                            <div className="hidden md:flex md:justify-between gap-10">
+                                              <div className="flex justify-between gap-5">
+                                                <p> Requirements: </p>
+                                              <h4 className='lg:text-xl md:text-xl sm:text-lg font-bold text-gray-700'>
+                                              {items.requirement}</h4>
+                                              </div>
+                                              <div className='text-xl font-normal gap-5  text-slategray flex justify-between gap-5'><p>Instructor: </p> <h4 className='md:text-xl sm:text-lg font-bold text-gray-600'>Stive Hawklin</h4></div>
+                                              <div className='text-xl font-normal flex justify-start gap-5  text-slategray'>Availability:  <h4 className='md:text-xl sm:text-lg font-bold text-gray-600'>Live Sessions & Chat </h4></div>
+                                            </div>
+                                            
+                                            </div>
+                                        <div className="">
+                                            <h3 className='text-lightgray text-[18px] font-normal pt-2'>{items.description}</h3>
                                         </div>
-
                                         <div className="flex justify-between items-center py-6">
                                             <div className="flex gap-4">
-                                                <h3 className="text-red text-22xl font-medium">{5}</h3>
-                                                <div className="flex">
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h3 className="text-3xl font-medium">$444</h3>
-                                            </div>
+                                               
+                                            <div className="flex -mx-0.5 ">
+                                             {[...Array(5)].map((_, idx) => (
+                                                 <StarIcon
+                                                   key={idx}
+                                                   color={idx < 3 ? "#F3B81F" : "slategray"}
+                                                   className="w-3.5 lg:w-4 h-3.5 lg:h-4 mx-0.5"
+                                                    />
+                                                 ))}
+                                           </div>
+                                               
+                                          </div>
+                                           
                                         </div>
-
-                                        <hr style={{ color: "#C4C4C4" }} />
-
-                                        <div className="flex justify-between pt-6">
-                                            <div className="flex gap-4">
-                                                {/* <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" /> */}
-                                                <h3 className="text-base font-medium text-black opacity-75">{items.name} classes</h3>
-                                            </div>
-                                            <div className="flex gap-4">
-                                                {/* <Image src={'/assets/courses/users.svg'} alt="users" width={24} height={24} className="inline-block m-auto" /> */}
-                                                <h3 className="text-base font-medium text-black opacity-75">{items.name} students</h3>
-                                            </div>
-                                        </div>
+                                     </div>
                                     </div>
                                 </div>
+                                </div>
+                                </Link>
+                                <hr />
                             </div>
-                          </div>
                         ))}  
                </section>
+               <Pagination page={p} count={courseCount} />
+      </div>
+      </div>
+      </div>      
+          
           </div>
   )
 }

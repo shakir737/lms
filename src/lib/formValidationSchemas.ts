@@ -9,6 +9,24 @@ export const subjectSchema = z.object({
 
 export type SubjectSchema = z.infer<typeof subjectSchema>;
 
+export const questionSchema = z.object({
+  id: z.coerce.number().optional(),
+  description: z.string().min(5, { message: "Description is required!" }),
+  productID: z.string().optional(),
+});
+
+export type QuestionSchema = z.infer<typeof questionSchema>;
+
+export const reviewSchema = z.object({
+  id: z.coerce.number().optional(),
+  description: z.string().min(5, { message: "Description is required!" }),
+  rating: z.number().optional(),
+  userID: z.string().optional(),
+  productID: z.string().optional(),
+});
+
+export type ReviewSchema = z.infer<typeof reviewSchema>;
+
 export const qualificationSchema = z.object({
   id: z.coerce.number().optional(),
   userId: z.string().optional(),
@@ -24,6 +42,30 @@ export const qualificationSchema = z.object({
 
 })
 export type QualificationSchema = z.infer<typeof qualificationSchema>;
+
+export const productSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string().min(5,{message: "Please Enter Product Title"}),
+  slug: z.string().min(5,{message: "Please Enter Product Slug"}),
+  imgUrl: z.string().optional(),
+  description: z.string().optional(),
+  isActive: z.boolean().optional(),
+  isWholesale: z.boolean().optional(),
+  sku: z.string().optional(),
+  barcode: z.string().optional(),
+  productCode : z.string().optional(),
+  unit: z.string().optional(),
+  productPrice: z.string().optional(),
+  salePrice: z.string().optional(),
+  wholesalePrice: z.string().optional(),
+  wholesaleQty: z.string().optional(),
+  productStock: z.string().optional(),
+  qty: z.string().optional(),
+  userId: z.string().optional(),
+  categoryId: z.string().optional(),
+  courseCategoryId: z.string().optional()
+})
+export type ProductSchema = z.infer<typeof productSchema>;
 
 export const registrationSchema = z.object({
   id: z.coerce.number().optional(),

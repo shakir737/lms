@@ -11,6 +11,7 @@ export type FormContainerProps = {
     | "category"
     | "job"
     | "registration"
+    | "product"
   type: "create" | "update" | "delete";
   data?: any;
   id?:  string;
@@ -55,6 +56,23 @@ const FormContainer = async ({ table, type, data, id, user, jobId}: FormContaine
          })
          ]);
         relatedData = { teachers: classTeachers, categories: categories };
+        break;
+
+        case "product":
+       
+        const [userList, categoryData, TutorialCategory] = await prisma.$transaction([
+          prisma.user.findMany({
+          where: { role: "ADMIN"},
+          select: { id: true, name: true},
+        }),
+         prisma.category.findMany({
+          where: { categoryType: "ECOMERSE"}
+         }),
+         prisma.category.findMany({
+          where: { categoryType: "TUTORIAL"}
+         })
+         ]);
+        relatedData = { users: userList, categories: categoryData, tutorialCategory: TutorialCategory};
         break;
 
          case "job":

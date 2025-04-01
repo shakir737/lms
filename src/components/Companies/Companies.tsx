@@ -58,11 +58,12 @@ export default async function Companies ()  {
           
         }} 
         autoplay={600}
+    
         className=""
       >
         <CarouselContent> 
                             {data.map((item, i) =>
-                                  <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/4">
+                                  <CarouselItem key={i} className="md:basis-1/5 lg:basis-1/5">
                                 <div>
                                     <Image src={item.imgSrc} alt={item.imgSrc} width={116} height={36} />
                                 </div>

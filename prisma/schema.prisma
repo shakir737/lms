@@ -21,6 +21,10 @@ model User {
   admission    Admission[]
   course       Course[]
   result       Result[]
+  product      Product[]
+  order        Order[]
+  review       Review[]
+  question     Question[]
   img          String?
   Gender       Gender?
   classId      String?     @db.ObjectId
@@ -29,6 +33,7 @@ model User {
   qualification Qualification[]
   CV           String?
 }
+
 model Qualification {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   userId    String?       
@@ -43,6 +48,7 @@ model Qualification {
   obtainCGPA        String
   img               String?
 }
+
 model Category {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   name         String
@@ -52,6 +58,8 @@ model Category {
   class        Class[]
   course       Course[]
   job          Job[]
+  product      Product[]
+
 }
 
 model Student {
@@ -112,6 +120,29 @@ model Class {
   user          User[]
 }
 
+model Review {
+   id             String       @id @default(auto()) @map("_id") @db.ObjectId
+   description    String 
+   rating         String?
+   userId         String?      @db.ObjectId
+   productId      String?      @db.ObjectId
+   user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+   product        Product?     @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+   createdAt      DateTime?    @default(now())
+   updatedAt      DateTime?    @updatedAt
+}
+
+model Question {
+   id             String       @id @default(auto()) @map("_id") @db.ObjectId
+   description    String 
+   userId         String?      @db.ObjectId
+   productId      String?      @db.ObjectId
+   user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+   product        Product?     @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+   createdAt      DateTime?    @default(now())
+   updatedAt      DateTime?    @updatedAt
+}
+
 model Job {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   name           String       @unique
@@ -125,6 +156,98 @@ model Job {
   endDate        DateTime
   category       Category?      @relation(fields:[categoryId], references: [id])
   registration   Registration[]
+}
+model Product {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  slug           String   @unique
+  imageUrl       String?
+  description    String?
+  isActive       Boolean?
+  isWholesale    Boolean?
+  sku            String?
+  barcode        String?
+  productCode    String?
+  unit           String?
+  productPrice   Float?
+  salePrice      Float?
+  wholesalePrice Float?
+  wholesaleQty   Int?
+  productStock   Int?
+  qty            Int?
+  categoryId     String?  @db.ObjectId
+  courseCategoryId String? @db.ObjectId
+  category       Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String? @db.ObjectId
+
+  orderItems OrderItem[]
+  sales      Sale[]
+  review     Review[]
+  question   Question[]
+  createdAt  DateTime?   @default(now())
+  updatedAt  DateTime?   @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String   @db.ObjectId
+  productId String   @db.ObjectId
+  vendorId  String   @db.ObjectId
+  imageUrl  String?
+  title     String?
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String  @db.ObjectId
+  // Personal Details
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  // shipping details
+  streetAddress String
+  city          String
+  country       String
+  district      String
+  shippingCost  Float
+  orderNumber   String?
+  //Payment Method
+  paymentMethod String
+
+  // Order Items
+  orderItems OrderItem[]
+
+  // Status
+  orderStatus Status @default(PROCESSING) // Set PROCESSING as the default value
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User        @relation(fields: [userId], references: [id])
+  sales        Sale[]
+}
+
+model Sale {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String   @db.ObjectId
+  productId String   @db.ObjectId
+  total     Float
+  productTitle String
+  productImage String
+  productPrice Float
+  productQty  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+
 }
 
 model Registration {
@@ -240,6 +363,9 @@ enum Status {
   REVIEW
   REJECTED
   COMPLETED
+  PROCESSING
+  SHIPPING
+  DELIVERED
   SUCCESSFULL
 }
 enum Day {

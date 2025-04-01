@@ -1,3 +1,4 @@
+
 import { CategoryFilter } from "@/components/Filters/category-filter";
 import { ProductsFilters } from "@/components/Filters/products-filter";
 import Job from "@/components/Job";
@@ -18,7 +19,8 @@ export default async function  Products({
 
   const session = await getServerSession(auth);
   const user:any = session?.user;
-
+  const {id} = searchParams;
+ 
  const [categoryData, categoryCount] = await prisma.$transaction([
  prisma.category.findMany({
   where:{
@@ -38,6 +40,7 @@ const p = page ? parseInt(page) : 1;
 
 const query1: Prisma.JobWhereInput = {};
 const query2: Prisma.JobWhereInput = {};
+
 if (queryParams) {
   for (const [key, value] of Object.entries(queryParams)) {
     if (value !== undefined) {
@@ -106,10 +109,23 @@ if (queryParams) {
           <p>Loading</p></>)}
          </div>
           <div className="w-[50%] overflow-y-auto h-[600px]" >
-            <Job data={jobData} count={jobCount} user={user}/> 
+            <Job data={jobData} count={jobCount} user={user} /> 
             
           </div>
         </div>
+        <div className={`md:hidden ${id == undefined ? "" : "hidden"}  md:flex md:flex-between md:w-full`}>
+          <div className="w-full border-[#c4c4c4] overflow-y-auto h-[600px]">
+            { jobsCount > 0 ? ( <>
+          <Jobs data={jobsData} count={jobsCount}/>
+          </>) : (<>
+          <p>Loading</p></>)}
+         </div>
+         
+        </div>
+        <div className={` md:hidden ${ id == undefined ? "hidden" : ""} md:w-[50%] overflow-y-auto h-[600px] `} >
+            <Job data={jobData} count={jobCount} user={user} /> 
+            
+          </div>
       </div>
     </div>
   )

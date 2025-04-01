@@ -10,7 +10,7 @@ export default async function Jobs ({data, count} : {data?:any, count?:number}) 
                 <div className=''>
 
                     <div className="">
-                        <h3 className="flex justify-center items-center text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Search Results.</h3>
+                        <h3 className="flex justify-center items-center text-midnightblue text-4xl lg:text-2xl font-semibold mb-5 sm:mb-0">Available Jobs</h3>
                         
                     </div>
                         {
@@ -23,16 +23,25 @@ export default async function Jobs ({data, count} : {data?:any, count?:number}) 
                                     
 
                                     <div className="px-3">
-                                        <h4 className='text-2xl font-bold pt-6 text-black'>{items.name}</h4>
-                                        <h4 className='text-2xl font-bold pt-1 text-black'>{items.specialization}</h4>
-
+                                        <div className="flex flex-row gap-2">
+                                        <h3 className='text-2xl text-gray-500'>Looking For:
+                                        </h3>  
+                                     <h4 className='text-2xl font-bold text-black'>{items.name}</h4>
+                                        </div>
+                                    </div>
+                                    <div className="px-3">
+                                        <div className="flex flex-row gap-2">
+                                        <h3 className='text-2xl text-gray-500'>Specialization:
+                                        </h3>  
+                                     <h4 className='text-2xl font-bold text-black'>{items.specialization}</h4>
+                                        </div>
                                         <div>
                                             <h3 className='text-base font-normal pt-6 opacity-75'>{items.description}</h3>
                                         </div>
 
                                         <div className="flex justify-between items-center py-6">
                                             <div className="flex gap-4">
-                                                <h3 className="text-red text-22xl font-medium">{new Intl.DateTimeFormat("en-US").format(items.endDate)}</h3>
+                                                <h3 className="text-red text-2xl font-medium">{new Intl.DateTimeFormat("en-US").format(items.endDate)}</h3>
                                                 <div className="flex">
                                                     <StarIcon className="h-5 w-5 text-gold" />
                                                     <StarIcon className="h-5 w-5 text-gold" />
@@ -42,7 +51,7 @@ export default async function Jobs ({data, count} : {data?:any, count?:number}) 
                                                 </div>
                                             </div>
                                             <div>
-                                                <h3 className="text-3xl font-medium">$45 - $55 / Per Hour</h3>
+                                                <h3 className="text-xl font-medium">Negotiable</h3>
                                             </div>
                                         </div>
 

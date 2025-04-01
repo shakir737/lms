@@ -2,10 +2,12 @@ const Table = ({
   columns,
   renderRow,
   data,
+
 }: {
   columns: { header: string; accessor: string; className?: string }[];
   renderRow: (item: any) => React.ReactNode;
   data: any[];
+
 }) => {
   return (
     <table className="w-full mt-4">

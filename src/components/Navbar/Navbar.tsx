@@ -20,7 +20,7 @@ const Navbar =  async () => {
 
                             <div className="flex justify-between ">
                                <Image  src={'/assets/logo/logo.png'} alt="logo" height={45} width={40}/>
-                              <div className='font-bold flex justify-center items-center text-[#1c03fc]'>
+                              <div className='font-bold flex justify-center sm:text-small md:text-medium lg:text-xl items-center text-[#1c03fc]'>
                               <p>E Learning Plateform</p>
                                 </div>
                             </div>   
@@ -48,6 +48,7 @@ const Navbar =  async () => {
                     </div>
                 </div>
             </>
+         <hr className='text-white'/>
         </Disclosure>
     );
 };

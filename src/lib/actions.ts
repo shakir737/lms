@@ -1,11 +1,14 @@
 "use server";
+import { parse } from "path";
 import {
   CategorySchema,
   CourseSchema,
   ExamSchema,
   JobSchema,
+  ProductSchema,
   QualificationSchema,
   RegistrationSchema,
+  ReviewSchema,
   StudentSchema,
   SubjectSchema,
   TeacherSchema,
@@ -252,6 +255,82 @@ export const createCourse = async (
   }
 };
 
+export const createReview = async (
+
+  data: ReviewSchema
+) => {
+  try {
+    await Prisma.review.create({
+      data: {
+        description: data.description,
+        rating: (data.rating)?.toString(),
+        userId: data.userID,
+        productId: data.productID,
+       
+      },
+    });
+    
+    // revalidatePath("/list/subjects");
+    return { success: true, error: false}
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+
+export const createProduct = async (
+  currentState: CurrentState,
+  data: ProductSchema
+) => {
+  console.log(data);
+  try {
+    await Prisma.product.create({
+      data: {
+        title: data.title,
+        slug: data.slug,
+        description: data.description,
+        imageUrl: data.imgUrl,
+        isActive: data.isActive,
+        isWholesale: data.isWholesale,
+        sku: data.sku,
+        productCode: data.productCode,
+        barcode: data.barcode,
+        categoryId: data.categoryId || "",
+        courseCategoryId: data.courseCategoryId || "",
+        userId: data.userId || "",
+        unit: data.unit,
+        productPrice: parseFloat(data.productPrice || ""),
+        salePrice: parseFloat(data.salePrice || ""),
+        wholesalePrice: parseFloat(data?.wholesalePrice || ""),
+        wholesaleQty: parseInt(data?.wholesaleQty || ""),
+        productStock: parseInt(data?.productStock || ""),
+        qty: parseInt(data?.qty || ""),
+        
+        // wholesalePrice: parseFloat(data.wholeSalePrice),
+      },
+    });
+    
+    // revalidatePath("/list/subjects");
+    return { success: true, error: false}
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+export const updateProduct = async (
+  currentState: CurrentState,
+  data: ProductSchema
+) => {
+  try {
+   
+
+    // revalidatePath("/list/class");
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
 export const updateCourse = async (
   currentState: CurrentState,
   data: CourseSchema

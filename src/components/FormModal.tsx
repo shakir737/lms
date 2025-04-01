@@ -10,6 +10,9 @@ import CategoryForm from "./forms/CategoryForm";
 import JobForm from "./forms/JobForm";
 import RegistrationForm from "./forms/RegistrationForm";
 
+const ProductForm = dynamic(() => import("./forms/ProductForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
 const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
   loading: () => <h1>Loading...</h1>,
 });
@@ -36,6 +39,14 @@ const forms: {
     jobId?: any
   ) => JSX.Element;
 } = {
+  product: (setOpen, type, data, relatedData) => (
+    <ProductForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
   subject: (setOpen, type, data, relatedData) => (
     <SubjectForm
       type={type}

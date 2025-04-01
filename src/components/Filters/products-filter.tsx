@@ -5,7 +5,8 @@ import { FilteredItem } from "./filtered-item";
 
 import { useEffect, useState } from "react";
 import { PriceFilter } from "./price-filter";
-export const ProductsFilters = ({data} : {data?:any}) => {
+import { CourseCategoryFilter } from "./courseCategory";
+export const ProductsFilters = ({data, courseCategory, courseCategoryCount} : {data?:any, courseCategory?:any, courseCategoryCount?:any}) => {
     const { push } = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();;
@@ -32,8 +33,8 @@ export const ProductsFilters = ({data} : {data?:any}) => {
      
     }
 	return (
-		<div className="pt-1 ">
-			<div className="block border-b border-gray-300 pb-7 mb-7">
+		<div className="pt-1 h-full w-full">
+			<div className="block border-b border-gray-300 pb-1 mb-1">
 				<div className="flex items-center justify-between mb-2.5">
 					<h2 className="font-semibold text-heading text-xl md:text-2xl">
 						Filters
@@ -48,7 +49,7 @@ export const ProductsFilters = ({data} : {data?:any}) => {
 						Clear all
 					</button>
 				</div>
-				<div className="flex flex-wrap -m-1">
+				<div className="flex flex-wrap ">
               {Object.entries(state).map(([key, value]) => {
                 if (Array.isArray(value)) {
                   return value.map((item) => (
@@ -74,7 +75,10 @@ export const ProductsFilters = ({data} : {data?:any}) => {
             </div>
 			</div>
 
-			<CategoryFilter data={data} />
+			<CategoryFilter data={data} type="" />
+      { courseCategoryCount > 0 && (
+        	<CourseCategoryFilter data={courseCategory} />
+      )}
       <PriceFilter/>
 			
 		</div>
