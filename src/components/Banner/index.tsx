@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Video } from 'lucide-react';
 
 
-const Banner = async () => {
+export default async function Banner  ()  {
 
     return (
         <div id="home-section" className='bg-lightkblue'>
@@ -96,4 +96,4 @@ const Banner = async () => {
     )
 }
 
-export default Banner;
+

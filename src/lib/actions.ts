@@ -30,6 +30,7 @@ export const Registration = async (data: SignupSchema) => {
  
 try{ 
   const {name,phoneNumber,email,password} = data
+  console.log(data);
   const username = email;
   const hashedPassword = await bcrypt.hash(password, 10);
  

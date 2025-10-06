@@ -1,7 +1,7 @@
 import Image from "next/image";
 import InputField from "../InputField";
 
-const Newsletter = async () => {
+export default async function Newsletter  () {
     return (
         <>
             {/* <div className="mx-auto max-w-2xl md:max-w-7xl sm:rounded-3xl testimonialbg"> */}
@@ -40,4 +40,3 @@ const Newsletter = async () => {
     )
 }
 
-export default Newsletter;
